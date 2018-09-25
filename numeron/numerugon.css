@@ -1,0 +1,170 @@
+
+#wrapper{
+    color:red;
+}
+
+a:hover {
+    color:blue;
+}
+select{
+    font-size: 40px;
+}
+
+#gameOvertext{
+    display:none;
+    font-size: 70px;
+}
+
+#hittext{
+    display:none;
+    color:blue;
+    font-size:70px;
+}
+
+.output{
+    position: absolute;
+    display:none;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%,-50%);
+    font-size:20px;
+}
+
+#answer{
+    position: absolute;
+    top: 50%;
+    left: 30%;
+}
+
+#answer2{
+    position: absolute;
+    top: 65%;
+    left: 30%;
+}
+
+#answer3{
+    position: absolute;
+    top: 80%;
+    left: 30%;
+}
+
+#player{
+    display:none;
+    font-size:70px;
+}
+
+.guessfield{
+    display:none;
+    float:left;   
+    padding: 18px;
+    margin: 10px;
+    border: 1px solid #cccccc;
+}
+
+.home{
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%,-50%);
+    font-size:40px;
+}
+
+.btncursor{
+    cursor: pointer ; 
+}
+
+#setumei{
+    display:none;
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%,-50%);
+    font-size:40px;
+}
+
+#back{
+    display:none;
+    font-size:40px;
+}
+
+#sidenavi {
+    float: right;
+    width: 20%;
+    height: 600px;
+    margin: 10px 10px 10px 0px;
+    font-size:20px;
+
+}
+
+#startbtn{
+    display:none;
+}
+
+#ContinueBtn{
+  
+    position: absolute;
+    display:none;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%,-50%); 
+    font-size:20px; 
+}
+
+#Graph{
+  
+    position: absolute;
+    display:none;
+    left: 50%;
+    top: 65%;
+    transform: translate(-50%,-50%);  
+    font-size:40px;
+}
+
+/*#cup,#cup2,#heart1,#heart2,#heart3,#heart4{
+    position: fixed;
+    left: 10%;
+    width:20%;
+    top:60%
+    
+}
+
+
+#heart1{
+    
+    display:none;
+    top:60%
+}
+
+#heart2{
+   
+    display:none;
+    top:45%
+}
+
+#heart3{
+    
+    display:none;
+    top:30%
+ 
+}
+
+#heart4{
+   
+    display:none;
+    top:75%;
+}
+
+
+
+/*#bgmid{
+    position: absolute;
+    right:0% ;
+    bottom:0%;
+}
+
+
+/*#rebtn{
+    display:none;
+    font-size:40px;
+}
+

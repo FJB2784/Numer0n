@@ -1,0 +1,189 @@
+ <!DOCTYPE html>
+<html onContextmenu="return false;">
+<head>
+    <meta charset="utf-8" />
+    <title>numer0n</title>   
+    <link rel="stylesheet"  href="numerugon.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+
+<body id="wrapper" >
+
+    <script type="text/javascript" src="https://www.gstatic.com/firebasejs/5.3.1/firebase.js"></script>
+    <script type="text/javascript" src="js/account.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/nfc_client.js"></script>
+    <script type="text/javascript" src="js/yjdmd5.js"></script>
+
+    <br>
+    <input id="bgmid" type="button" value="BGM：ON" onclick="bgmswitch()"/><br />
+    <input id="ModeBtn" type="button" value="難易度：普通" onclick="ModeSwitch()"/><br />
+    <input type='text' class="form-control" id="nameInput1" placeholder="登録する名前">
+    <input type="button" value="データの登録" onclick="db1();"><br />
+    <input type="button" value="データの削除" onclick="db2();">
+    <input id="ContinueBtn" type="button" value="コンテニュー" onclick="Continue()"/>
+
+    <div id="sidenavi"><br>
+
+        <div id="log">
+        ①<input  type="button" value="ID読み込み" onclick="printIDm()"> or <input  type="button" value="テストID読み込み" onclick="printIDmDummyWithoutServer();"><br><br>
+        ②<input  type="button" value="ログアウト" onclick="logout()"><br><br>
+        </div>
+        
+        ユーザー名：<span id="UserName">ログインしてください</span><br>
+        ポイント：<span id="Point">ログインしてください</span>
+        <!--<div id="comp">コンプ率:</div> -->
+    </div>
+        
+    <p id = "rank_1"></p>
+    <p id = "rank_2"></p>
+    <p id = "rank_3"></p>
+    <p id = "rank_4"></p>
+    <p id = "rank_5"></p>
+
+    <div class ="home">
+        <h1>ぬめろん</h1>
+        <p>let's go ぬめろん！</p>
+
+        <div class="btncursor">
+            <a class ="anime" id ="setumeibtn" >~操作説明~</a><br>
+            <a class ="anime" id ="startbtn">~GameStart~</a>
+        </div>
+    </div>
+
+    <div>
+        <div id="setumei">数字と桁が合っていた場合は｢EAT｣、数字は合っているが桁は合っていない場合は｢BITE｣。難易度、BGMは左上のボタンで変えれます。 コンテニューは1回までで、プレイ回数が５回復します。　<br>例:答えが「236」で、予想を「267」とした場合は「1E2B」となる。</div>
+        <div class="btncursor" id="back">~タイトルに戻る~</div> 
+
+        <TABLE id ="Graph"  bordercolor="red" cellpadding="0" >
+            <TR style="background:white ">
+            <TD>難易度</TD>
+            <TD>PlayPoint</TD>
+            <TD>HitPoint</TD>
+            <TD>ContinuePoint</TD>
+            </TR>
+            <TR style="background:white " >
+            <TD>普通</TD>
+            <TD>-10p</TD>
+            <TD>+20p</TD>
+            <TD>-15p</TD>
+            </TR>
+            <TR style="background:white ">
+            <TD>難しい</TD>
+            <TD>-30p</TD>
+            <TD>+100p</TD>
+            <TD>-50p</TD>
+            </TR>
+            <TR>
+        </TABLE>
+            
+    </div>
+
+    <div  class="slide output">
+         
+        <h1>ぬめろん</h1>
+        <p>let's go ヌメルゴン！三桁の数字をあてよう</p>
+     <select name="userfirst" id="userfirst">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+     </select>
+     
+     <select name="usersecond" id="usersecond">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+     </select>
+     
+     <select name="userthird" id="userthird">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+     </select>
+
+     <select name="userfourth" id="userfourth">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+     </select>
+     
+     <input type="button" value="予想を入力" onclick="checkGuess();"/><br />
+
+    </div>
+
+    <div id="history">
+        <div id="answer" class="slide" >
+            <div  class="guessfield" id="guessfield0"></div>
+            <div  class="guessfield" id="guessfield1"></div>
+            <div  class="guessfield" id="guessfield2"></div>
+            <div  class="guessfield" id="guessfield3"></div>
+            <div  class="guessfield" id="guessfield4"></div>
+        </div>
+
+        <div id="answer2" class="slide" >
+            <div class="guessfield" id="guessfield5"></div>
+            <div class="guessfield" id="guessfield6"></div>
+            <div class="guessfield" id="guessfield7"></div>
+            <div class="guessfield" id="guessfield8"></div>   
+            <div class="guessfield" id="guessfield9"></div>     
+        </div>
+
+        <div id="answer3" class="slide" >
+            <div class="guessfield" id="guessfield10"></div>
+            <div class="guessfield" id="guessfield11"></div>
+            <div class="guessfield" id="guessfield12"></div>
+            <div class="guessfield" id="guessfield13"></div>   
+            <div class="guessfield" id="guessfield14"></div>     
+        </div>
+
+        <div id="player" class="slide"></div>
+
+    </div>
+
+    <div class = "output">
+        <h1 id="gameOvertext">GameOver...</h1>
+        <h1 id="hittext">正解...</h1>
+    </div>
+
+     <audio id="bgm" src= "sound/summer-mountain2.mp3" autoplay loop ></audio>
+     <audio id="hitSound"src="sound/hit.mp3"></audio>
+     <audio id="missSound"src="sound/miss.mp3"></audio>
+     <audio id="reSound"src="sound/re.mp3"></audio>
+     <audio id="gameOverSound"src="sound/gameOver.mp3"></audio>
+     <audio id="lastSound"src="sound/last.mp3"></audio>
+     
+     
+</body>
+</html>
+
+ 
+
+   
