@@ -340,6 +340,7 @@ function db1() {
         console.log("出来ねえ");
         alert('名前が入力されていない、もしくは新規登録ではないため登録できません。');
       } else {
+        alert("ユーザー登録できました");
         console.log("出来た");
         var commentsRef = firebase.database().ref(idm); // 挿入する際の項目名を指定
         commentsRef.set({ name: nameInput, money: 100 }); // nameにnameInputに入力した値が、moneyにmoneyInputに入力した値が挿入される
@@ -458,6 +459,81 @@ function Continue(){
         }
     });
 }
+
+//var timer1; //タイマーを格納する変数（タイマーID）の宣言
+
+/*
+//カウントダウン関数を1000ミリ秒毎に呼び出す関数
+function cntStart()
+{
+  //document.timer.elements[2].disabled=true;
+  timer1=setInterval("countDown()",1000);
+}
+
+//タイマー停止関数
+/*function cntStop()
+{
+  document.timer.elements[2].disabled=false;
+  clearInterval(timer1);
+}
+
+
+//カウントダウン関数
+function countDown()
+{
+  //var min=document.timer.elements[0].value;
+ // var sec=document.timer.elements[1].value;
+  /*
+  if( (min=="") && (sec=="") )
+  {
+    alert("時刻を設定してください！");
+    reSet();
+  }
+  else
+  {
+      
+
+     var min = document.getElementById('hun').value; ;
+     var sec = document.getElementById('byou').value; ;
+    if (min=="") min=0;
+    min=parseInt(min);
+    
+    if (sec=="") sec=0;
+    sec=parseInt(sec);
+
+    tmWrite(min*60+sec-1);
+  
+}
+
+alert(document.getElementById('hun'));
+
+//残り時間を書き出す関数
+function tmWrite(int)
+{
+  int=parseInt(int);
+  
+    if (int<=0){
+        reSet();
+        alert("時間です！");
+    }else{
+        //残り分数はintを60で割って切り捨てる
+        //m.innerHTML=Math.floor(int/60);
+        document.getElementById("hun").innerHTML = Math.floor(int/60);
+        //残り秒数はintを60で割った余り
+        //s.innerHTML=int % 60;
+        document.getElementById("byou").innerHTML = int % 60;
+    }
+}
+
+//フォームを初期状態に戻す（リセット）関数
+function reSet()
+{
+    document.getElementById("hun").innerHTML="0";
+    document.getElementById("byou").innerHTML="0";
+    document.timer.elements[2].disabled=false;
+  clearInterval(timer1);
+}  
+
 /*ハート
 function HeartClick(){
     click++;
