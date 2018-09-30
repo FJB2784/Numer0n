@@ -10,15 +10,13 @@ select{
     font-size: 40px;
 }
 
-#gameOvertext{
+#gameOvertext,#hittext{
+    position: absolute;
     display:none;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%,-50%);
     font-size: 70px;
-}
-
-#hittext{
-    display:none;
-    color:blue;
-    font-size:70px;
 }
 
 .output{
@@ -30,35 +28,31 @@ select{
     font-size:20px;
 }
 
-#answer{
-    position: absolute;
-    top: 50%;
-    left: 30%;
-}
-
-#answer2{
-    position: absolute;
-    top: 65%;
-    left: 30%;
-}
-
-#answer3{
-    position: absolute;
-    top: 80%;
-    left: 30%;
+td {
+	padding: 10%;
 }
 
 #player{
+    position: absolute;
     display:none;
     font-size:70px;
+    left: 50%;
+    top: 20%;
+    transform: translate(-50%,-50%);  
 }
 
-.guessfield{
+.guessfield,.guessfield2{
     display:none;
     float:left;   
-    padding: 18px;
+    padding: 15px;
     margin: 10px;
     border: 1px solid #cccccc;
+}
+
+#his{
+    position: absolute;
+    left: 35%;
+    top: 40%; 
 }
 
 .home{
@@ -77,14 +71,20 @@ select{
     display:none;
     position: absolute;
     left: 50%;
-    top: 30%;
+    top: 40%;
     transform: translate(-50%,-50%);
     font-size:40px;
 }
 
 #back{
+    position: fixed;
     display:none;
+    top:80%;
+    left: 50%;
+    transform: translate(-50%,-50%); 
     font-size:40px;
+    border: 2px solid red;
+    background-color: black;
 }
 
 #sidenavi {
@@ -93,78 +93,50 @@ select{
     height: 600px;
     margin: 10px 10px 10px 0px;
     font-size:20px;
-
 }
 
 #startbtn{
     display:none;
+    border: 2px solid red;
+    background-color: black;
+}
+
+#setumeibtn{
+    border: 2px solid red;
+    background-color: black;
 }
 
 #ContinueBtn{
-  
-    position: absolute;
-    display:none;
-    left: 50%;
-    top: 40%;
-    transform: translate(-50%,-50%); 
-    font-size:20px; 
-}
-
-#Graph{
-  
-    position: absolute;
-    display:none;
-    left: 50%;
-    top: 65%;
-    transform: translate(-50%,-50%);  
-    font-size:40px;
-}
-
-/*#cup,#cup2,#heart1,#heart2,#heart3,#heart4{
     position: fixed;
-    left: 10%;
-    width:20%;
-    top:60%
-    
-}
-
-
-#heart1{
-    
     display:none;
-    top:60%
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%); 
+    font-size:20px;
 }
-
-#heart2{
-   
+#resetbtn{
+    position: fixed;
     display:none;
-    top:45%
+    top:55%;
+    left:50%;
+    transform: translate(-50%,-50%); 
+    font-size:20px;
 }
+ul {
+  display: inline-block;
+    margin: 20px;
+    padding: 10px;
+    border: 2px solid red;
+    list-style: none;
+    background-color: black;
+    }
 
-#heart3{
-    
+#timer{
     display:none;
-    top:30%
- 
-}
-
-#heart4{
-   
-    display:none;
-    top:75%;
-}
-
-
-
-/*#bgmid{
+    font-size: 640%;
     position: absolute;
-    right:0% ;
-    bottom:0%;
-}
-
-
-/*#rebtn{
-    display:none;
-    font-size:40px;
+    left: 50%;
+    top: 10%;
+    transform: translate(-50%,-50%);  
 }
 

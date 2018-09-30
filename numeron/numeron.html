@@ -14,33 +14,25 @@
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/nfc_client.js"></script>
     <script type="text/javascript" src="js/yjdmd5.js"></script>
-
-    <br>
+    
+    <div id="kotae"></div>
     <input id="bgmid" type="button" value="BGM：ON" onclick="bgmswitch()"/><br />
     <input id="ModeBtn" type="button" value="難易度：普通" onclick="ModeSwitch()"/><br />
-    <input type='text' class="form-control" id="nameInput1" placeholder="登録する名前">
-    <input type="button" value="データの登録" onclick="db1();"><br />
-    <input type="button" value="データの削除" onclick="db2();">
+    <span class ="log">
+        <input type='text' class="form-control" id="nameInput1" placeholder="登録する名前">
+        <input type="button" value="データの登録" onclick="db1();"><br />
+        <input type="button" value="データの削除" onclick="db2();">
+    </span>
     <input id="ContinueBtn" type="button" value="コンテニュー" onclick="Continue()"/>
-
-    <!--<form name="timer">
-        <span id="hun" type="value" value="">4</span>分
-        <span id="byou" type="value" value="">3</span>秒<br>
-        <input type="button" value="スタート" onclick="cntStart()">
-        <input type="button" value="ストップ" onclick="cntStop()">
-        </form>
-    -->
-    
+    <input id="resetbtn" type="button" value="タイトルに戻る" onclick="Resetgame()"/>
+   
     <div id="sidenavi"><br> 
-
-        <div id="log">
+        <div class="log">
         ①<input  type="button" value="ID読み込み" onclick="printIDm()"> or <input  type="button" value="テストID読み込み" onclick="printIDmDummyWithoutServer();"><br><br>
         ②<input  type="button" value="ログアウト" onclick="logout()"><br><br>
         </div>
-        
         ユーザー名：<span id="UserName">ログインしてください</span><br>
         ポイント：<span id="Point">ログインしてください</span>
-        <!--<div id="comp">コンプ率:</div> -->
     </div>
         
     <p id = "rank_1"></p>
@@ -49,133 +41,127 @@
     <p id = "rank_4"></p>
     <p id = "rank_5"></p>
 
+    <form name="timer" id="timer">
+        <span id="hun">4</span>分
+        <span id="byou">0</span>秒<br>
+    </form>
+
+    <div id="player" class="slide"></div>
+
     <div class ="home">
         <h1>ぬめろん</h1>
         <p>let's go ぬめろん！</p>
 
         <div class="btncursor">
-            <a class ="anime" id ="setumeibtn" >~操作説明~</a><br>
+            <a class ="anime" id ="setumeibtn" >~操作説明~</a><br><br>
             <a class ="anime" id ="startbtn">~GameStart~</a>
         </div>
     </div>
 
-    <div>
-        <div id="setumei">数字と桁が合っていた場合は｢EAT｣、数字は合っているが桁は合っていない場合は｢BITE｣。難易度、BGMは左上のボタンで変えれます。 コンテニューは1回までで、プレイ回数が５回復します。　<br>例:答えが「236」で、予想を「267」とした場合は「1E2B」となる。</div>
-        <div class="btncursor" id="back">~タイトルに戻る~</div> 
+    <div id="setumei">数字と桁が合っていた場合は｢EAT｣、数字は合っているが桁は合っていない場合は｢BITE｣。難易度、BGMは左上のボタンで変えれます。 コンテニューは1回までで、プレイ回数が５回復します。<br>
+        例:答えが「236」で、予想を「267」とした場合は「1E1B」となる。制限時間になるとラストアンサーになります。<br>
+        <ul>難易度：普通
+        <li>プレイ料金:１０ｐ</li>
+        <li>当たり料金：２０ｐ</li>
+        <li>コンテ料金:１５ｐ</li>
+        </ul>
 
-        <TABLE id ="Graph"  bordercolor="red" cellpadding="0" >
-            <TR style="background:white ">
-            <TD>難易度</TD>
-            <TD>PlayPoint</TD>
-            <TD>HitPoint</TD>
-            <TD>ContinuePoint</TD>
-            </TR>
-            <TR style="background:white " >
-            <TD>普通</TD>
-            <TD>-10p</TD>
-            <TD>+20p</TD>
-            <TD>-15p</TD>
-            </TR>
-            <TR style="background:white ">
-            <TD>難しい</TD>
-            <TD>-30p</TD>
-            <TD>+100p</TD>
-            <TD>-50p</TD>
-            </TR>
-            <TR>
-        </TABLE>
-            
+        <ul>難易度：難しい
+            <li>プレイ料金：３０ｐ</li>
+            <li>当たり料金：１００ｐ</li>
+            <li>コンテ料金：５０ｐ</li>
+        </ul>
     </div>
 
-    <div  class="slide output">
-         
+    <a class="btncursor " id="back">~タイトルに戻る~</a> 
+    
+    <form name="sampleform" class="output">    
         <h1>ぬめろん</h1>
-     <select name="userfirst" id="userfirst">
-        <option value="0">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-     </select>
-     
-     <select name="usersecond" id="usersecond">
-        <option value="0">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-     </select>
-     
-     <select name="userthird" id="userthird">
-        <option value="0">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-     </select>
+        <select name="userfirst" id="userfirst">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+        </select>
+        
+        <select name="usersecond" id="usersecond">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+        </select>
+        
+        <select name="userthird" id="userthird">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+        </select>
 
-     <select name="userfourth" id="userfourth">
-        <option value="0">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-     </select>
-     
-     <input type="button" value="予想を入力" onclick="checkGuess();"/><br />
+        <select name="userfourth" id="userfourth">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+        </select>
+        
+        <input type="button" value="予想を入力" onclick="checkGuess();"/><br />
+    
+    </form>  
 
-    </div>
+    <table id="his" >
+        <tr id="answer" class="slide" >
+            <td  class="guessfield" id="guessfield0"></td>
+            <td  class="guessfield" id="guessfield1"></td>
+            <td  class="guessfield" id="guessfield2"></td>
+            <td  class="guessfield" id="guessfield3"></td>
+            <td  class="guessfield" id="guessfield4"></td>
+        </tr>
 
-    <div id="history">
-        <div id="answer" class="slide" >
-            <div  class="guessfield" id="guessfield0"></div>
-            <div  class="guessfield" id="guessfield1"></div>
-            <div  class="guessfield" id="guessfield2"></div>
-            <div  class="guessfield" id="guessfield3"></div>
-            <div  class="guessfield" id="guessfield4"></div>
-        </div>
+        
+        <tr id="answer2" class="slide" >
+            <td class="guessfield" id="guessfield5"></td>
+            <td class="guessfield" id="guessfield6"></td>
+            <td class="guessfield" id="guessfield7"></td>
+            <td class="guessfield" id="guessfield8"></td>   
+            <td class="guessfield" id="guessfield9"></td>     
+        </tr>
 
-        <div id="answer2" class="slide" >
-            <div class="guessfield" id="guessfield5"></div>
-            <div class="guessfield" id="guessfield6"></div>
-            <div class="guessfield" id="guessfield7"></div>
-            <div class="guessfield" id="guessfield8"></div>   
-            <div class="guessfield" id="guessfield9"></div>     
-        </div>
+        <tr id="answer3" class="slide" >
+            <td class="guessfield2" id="guessfield10"></td>
+            <td class="guessfield2" id="guessfield11"></td>
+            <td class="guessfield2" id="guessfield12"></td>
+            <td class="guessfield2" id="guessfield13"></td>   
+            <td class="guessfield2" id="guessfield14"></td>     
+        </tr>
+       
+    </table>
 
-        <div id="answer3" class="slide" >
-            <div class="guessfield" id="guessfield10"></div>
-            <div class="guessfield" id="guessfield11"></div>
-            <div class="guessfield" id="guessfield12"></div>
-            <div class="guessfield" id="guessfield13"></div>   
-            <div class="guessfield" id="guessfield14"></div>     
-        </div>
-
-        <div id="player" class="slide"></div>
-
-    </div>
-
-    <div class = "output">
+    <div >
         <h1 id="gameOvertext">GameOver...</h1>
         <h1 id="hittext">正解...</h1>
     </div>
@@ -183,11 +169,13 @@
      <audio id="bgm" src= "sound/summer-mountain2.mp3" autoplay loop ></audio>
      <audio id="hitSound"src="sound/hit.mp3"></audio>
      <audio id="missSound"src="sound/miss.mp3"></audio>
+     <audio id="kamiSound"src="sound/kami.mp3"></audio>
      <audio id="reSound"src="sound/re.mp3"></audio>
      <audio id="gameOverSound"src="sound/gameOver.mp3"></audio>
      <audio id="lastSound"src="sound/last.mp3"></audio>
-     
-     
+     <audio id="tearSound"src="sound/tear.mp3"></audio>
+     <audio id="hanabiSound"src="sound/hanabi.mp3"  loop></audio>
+         
 </body>
 </html>
 
