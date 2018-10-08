@@ -47,6 +47,7 @@ td {
     padding: 15px;
     margin: 10px;
     border: 1px solid #cccccc;
+    background-color: black;
 }
 
 #his{
@@ -83,8 +84,6 @@ td {
     left: 50%;
     transform: translate(-50%,-50%); 
     font-size:40px;
-    border: 2px solid red;
-    background-color: black;
 }
 
 #sidenavi {
@@ -97,12 +96,17 @@ td {
 
 #startbtn{
     display:none;
-    border: 2px solid red;
+    border: 2px solid white;
     background-color: black;
 }
 
 #setumeibtn{
-    border: 2px solid red;
+    border: 2px solid white;
+    background-color: black;
+}
+
+#back{
+    border: 2px solid white;
     background-color: black;
 }
 
@@ -114,14 +118,14 @@ td {
     transform: translate(-50%,-50%); 
     font-size:20px;
 }
-#resetbtn{
+#resetbtn,#resultbtn,#resultkotae{
     position: fixed;
     display:none;
-    top:55%;
     left:50%;
     transform: translate(-50%,-50%); 
     font-size:20px;
 }
+
 ul {
   display: inline-block;
     margin: 20px;
@@ -140,3 +144,20 @@ ul {
     transform: translate(-50%,-50%);  
 }
 
+input,.anime {
+    background: rgba(0,0,0,0);
+    border-radius: 20px;
+    color: white;
+}
+
+#resetbtn{
+    top:80%;
+}
+
+#resultbtn{
+    top:55%;
+}
+
+#resultkotae{
+    top:20%;
+}

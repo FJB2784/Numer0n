@@ -20,6 +20,7 @@ var third=0;
 var fourth=0;
 var minCopy;
 var secCopy;
+var guest = 0;
 rank();
 
 //シャッフルアルゴリズム
@@ -67,46 +68,32 @@ $(function(){
     });
 
     $('#back').on('click',function(){
-        $('#setumei,#back,#Graph').stop().fadeOut(1000,function(){
+        //$('#back,#Graph').fadeOut(1000);
+        $('#setumei,#back').stop().fadeOut(1000,function(){
             $('.home').fadeIn(1000);
+           
         });
     });
 
     $('#startbtn').on('click',function(){
-        var database = firebase.database();
-        var dataRef = database.ref('/' + idm);
-
-        dataRef.once("value").then(function (snapshot) {
-            var money1 = snapshot.child("money").val();
+       if(guest == 1){
+            cntStart();
 
             if(mode == 1){
-                point1 = -10;
+                $('#userfourth').css({'display':'none'});
             }else{
-                point1 = -50;
+                $('#userfourth').css({'display':'inline'});
             }
 
-            if((money1+point1)>= 0){
-                cntStart();
-                if(mode == 1){
-                    $('#userfourth').css({'display':'none'});
-                }else{
-                    $('#userfourth').css({'display':'inline'});
-                }
-
-                ModeSet = 1;
-
-                $('.home,.log').stop().fadeOut(1000,function(){
-                    $('.output,#timer').fadeIn(1000);
-                    db();
-                    setTimeout(reload, 500);
-                    set = 0;
-                });
-
-            }else{
-                alert("お金がありません");
+            ModeSet = 1;
+            $('.home,.log').stop().fadeOut(1000,function(){
+                $('.output,#timer').fadeIn(1000);
                 set = 0;
-            }
-        });
+            });
+
+        }else{
+            ProductionStart();
+        }
     });       
 });
 
@@ -200,7 +187,7 @@ function checkGuess(){
                 if(mode == 1){
                     guesses[playCounter].innerHTML = (playCounter+1)+"回目<br>" + userguess[0] + userguess[1] + userguess[2]+"<br>"+eatcount+"E"+bitcount +"B"; 
                 }else{
-                    guesses[playCounter].innerHTML = "<br>"+ (playCounter+1)+"回目<br>" + userguess[0] + userguess[1] + userguess[2]+ userguess[3]+"<br>"+eatcount+"E"+bitcount+"B"; 
+                    guesses[playCounter].innerHTML = (playCounter+1)+"回目<br>" + userguess[0] + userguess[1] + userguess[2]+ userguess[3]+"<br>"+eatcount+"E"+bitcount+"B"; 
                 }
                 playman.innerHTML =  "残り"+restPlay + "回";  
                     
@@ -210,14 +197,15 @@ function checkGuess(){
 
                 if( CheckHit() ){
                     setTimeout(function(){
-                        if(mode == 1){
-                            point1 = 30;
-                        }else{
-                            point1 = 100;
+                       if(guest == 0){
+                            if(mode == 1){
+                                point1 = 20;
+                            }else{
+                                point1 = 100;
+                            }
+                            db();
+                            setTimeout(reload, 500);
                         }
-                        db();
-                        setTimeout(reload, 500);
-                        //$('.slide,.output').slideUp();
                         clearInterval(timer1);
                         $('.guessfield,.guessfield2,.output,#player,#timer').slideUp();
                         $('#hittext').fadeIn(5000);
@@ -225,6 +213,7 @@ function checkGuess(){
                         hitAudio.play(); 
                         setTimeout(function(){hanabiAudio.play()}, 1500);
                         $('#resetbtn').fadeIn(1000);
+                       
                     },1000);
                 }else if(restPlay == 0){
                     set = 1;
@@ -239,8 +228,8 @@ function checkGuess(){
                                 if(ContCount == 0){
                                     $('#ContinueBtn').fadeIn(1000); 
                                 }
-                                $('#resetbtn').fadeIn(1000);
-                                
+                                //$('#resetbtn').fadeIn(1000);
+                                $('#resultbtn').fadeIn(1000);
                                 if(timerset == 1){
                 
                                     while(playCounter < 10){
@@ -294,6 +283,7 @@ function printIDmDummyWithoutServer() {
     }else{
         return false;
     }
+    guest = 0;
     var database = firebase.database();
     var seed = "3";
     idm = getIDmDummyWithoutServer(seed);
@@ -308,8 +298,25 @@ function printIDmDummyWithoutServer() {
             });
         });
     });
-  
 }  
+
+//ゲストプレイ
+function guestplay(){
+    if(set==0){
+        set=1; 
+    }else{
+        return false;
+    }
+    guest = 1;
+    $(function(){
+        $('#Point,#UserName').stop().fadeOut(1000,function(){
+        document.getElementById("UserName").innerHTML = "ゲスト";
+        document.getElementById("Point").innerHTML =  "ゲスト";
+        $('#Point,#UserName,#startbtn').fadeIn(1000); 
+        set=0;
+        });
+    });   
+}
 
 // 画面更新
 function reload() {
@@ -353,39 +360,6 @@ function DoubleClick(){
         return false;
     }
 }
-
-// ここから挿入処理
-function db1() {
-    var hantei;
-    var idm = "eccbc87e4b5ce2fe"; // ここにユーザのIDを入れる、本番はカードリーダから取得したIDが入る
-    var database = firebase.database(); //firebaseのデータベースを使う事を変数で定めている
-    var dataRef = database.ref('/' + idm); // 取得するデータの項目名を定めている。プログラムには「'/'+user」は「/ユーザーID」に見えている。
-    var nameInput = document.getElementById("nameInput1").value
-    dataRef.once("value").then(function (snapshot) {
-      hantei = snapshot.child("name").val();
-      console.log("hantei:" + hantei);
-      console.log("input:"+nameInput);
-
-      if (hantei != undefined || nameInput == "") {
-        console.log("出来ねえ");
-        alert('名前が入力されていない、もしくは新規登録ではないため登録できません。');
-      } else {
-        alert("ユーザー登録できました");
-        console.log("出来た");
-        var commentsRef = firebase.database().ref(idm); // 挿入する際の項目名を指定
-        commentsRef.set({ name: nameInput, money: 100 }); // nameにnameInputに入力した値が、moneyにmoneyInputに入力した値が挿入される
-      }
-    });
-};
-  // ここまで挿入処理
-
-  //データ削除
-function db2() {
-    var idm = "eccbc87e4b5ce2fe"; // ここにユーザのIDを入れる
-    var commentsRef = firebase.database().ref(idm); // 挿入する際の項目名を指定
-    commentsRef.set({ name: null, money: null }); // nameにnameInputに入力した値が、moneyにmoneyInputに入力した値が挿入される
-}
-
   //ランキング
 window.onload = function(){
     //1000ミリ秒（1秒）毎に関数「showNowDate()」を呼び出す
@@ -414,7 +388,6 @@ window.document.onkeydown = check;
 //BGM
 function bgmswitch(){
     var bgmsound = document.getElementById('bgm');
-  
     if(bgm == 0){
         bgmsound.play(); 
         bgm = 1;
@@ -461,7 +434,7 @@ function gOver(){
     },1000);
 }
 
-//modeset
+//ゲームモード
 function ModeSwitch(){
     
     if(ModeSet == 0){
@@ -477,40 +450,30 @@ function ModeSwitch(){
 
 //コンテニュー
 function Continue(){
-    if(mode == 1){point1=-15;}else{point1=-50;}
-    var tearAudio = document.getElementById('tearSound');
-    var database = firebase.database();
-    var dataRef = database.ref('/' + idm);
-    dataRef.once("value").then(function (snapshot) {
-        var money1 = snapshot.child("money").val();
-        if((money1+point1)> 0){
-            $('#gameOvertext,#ContinueBtn,#resetbtn').fadeOut(1000);
-            ContCount = 1;
-            restPlay = 5;
-            if(timerset == 1){ playCounter--;};
-            playman.innerHTML =  "残り"+restPlay + "回";  
-            set = 0;
-            tearAudio.play();
-            document.sampleform.reset();
-            document.getElementById("hun").innerHTML = 2; 
-            document.getElementById("byou").innerHTML = 0;
-            time = 120;
-            timer1=setInterval("countDown()",1000);
-            db();
-            setTimeout(reload, 500);
-                setTimeout(function(){
-                    $('.guessfield,.output,#player,#timer').fadeIn(2000);
-                },1000);
-        }else{
-            alert("お金が足りません");
-        }
-    });
-}
+    if(guest == 0){
+        if(mode == 1){point1=-15;}else{point1=-50;}
+        var database = firebase.database();
+        var dataRef = database.ref('/' + idm);
+        dataRef.once("value").then(function (snapshot) {
+            var money1 = snapshot.child("money").val();
+            if((money1+point1)> 0){
+                ProductionContinue();
+                db();
+                setTimeout(reload, 500);
+            }else{
+                alert("お金が足りません");
+            }
+        });
+    }else{
+        ProductionContinue();
+    }
+}  
+
 
 //タイトルに戻る
 function Resetgame(){
     var hanabiAudio = document.getElementById('hanabiSound');
-    $('#gameOvertext,#ContinueBtn,#resetbtn, #hittext').stop().fadeOut(1000,function(){
+    $('#gameOvertext,#ContinueBtn,#resetbtn, #hittext,.guessfield,.guessfield2').stop().fadeOut(1000,function(){
         restPlay = 10;
         playCounter = -1;
         ContCount = 0;
@@ -525,6 +488,7 @@ function Resetgame(){
         $('#wrapper').css({"background":"url('img/Shrine.jpg')",'background-size':'cover','background-repeat':'no-repeat','background-attachment':'fixed'});
         setTimeout(function(){document.getElementById("kotae").innerHTML = "答え:"+first+second+third+fourth;},1000);
         $('.home,.log').fadeIn(1000);
+        $('#resultkotae').fadeOut(1000);
     });
 }
 
@@ -564,3 +528,86 @@ function reSet()
   clearInterval(timer1);
 }  
 
+function ProductionStart(){
+    var database = firebase.database();
+    var dataRef = database.ref('/' + idm);
+
+    dataRef.once("value").then(function (snapshot) {
+        var money1 = snapshot.child("money").val();
+
+        if(mode == 1){
+            point1 = -10;
+        }else{
+            point1 = -30;
+        }
+
+        if((money1+point1)>= 0){
+            cntStart();
+            if(mode == 1){
+                $('#userfourth').css({'display':'none'});
+            }else{
+                $('#userfourth').css({'display':'inline'});
+            }
+
+            ModeSet = 1;
+
+            $('.home,.log').stop().fadeOut(1000,function(){
+                $('.output,#timer').fadeIn(1000);
+                db();
+                setTimeout(reload, 500);
+                set = 0;
+            });
+
+        }else{
+            alert("お金がありません");
+            set = 0;
+        }
+    });
+}
+
+function ProductionHit(){
+    if(mode == 1){
+        point1 = 30;
+    }else{
+        point1 = 100;
+    }
+    db();
+    setTimeout(reload, 500);
+}
+
+
+function ProductionContinue(){
+
+    var tearAudio = document.getElementById('tearSound');
+    $('#gameOvertext,#ContinueBtn,#resultbtn').fadeOut(1000);
+    ContCount = 1;
+    restPlay = 5;
+    if(timerset == 1){ playCounter--;};
+    playman.innerHTML =  "残り"+restPlay + "回";  
+    set = 0;
+    tearAudio.play();
+    document.sampleform.reset();
+    document.getElementById("hun").innerHTML = 2; 
+    document.getElementById("byou").innerHTML = 0;
+    time = 120;
+    timer1=setInterval("countDown()",1000);
+    setTimeout(function(){
+        $('.guessfield,.output,#player,#timer').fadeIn(2000);
+    },1000);
+}
+
+function result(){
+    $('#ContinueBtn,#resultbtn').stop().fadeOut(1000,function(){
+        $('.guessfield').fadeIn(1000);
+        if(mode == 1){
+            document.getElementById("resultkotae").innerHTML = "答え:"+first+second+third;
+        }else{
+            document.getElementById("resultkotae").innerHTML = "答え:"+first+second+third+fourth;
+        }
+        $('#resultkotae').fadeIn(1000);
+        if( ContCount == 1){
+            $('.guessfield2').fadeIn(1000);
+        }
+        $('#resetbtn').fadeIn(1000);
+    });
+}
